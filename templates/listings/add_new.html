@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block title %}Add New Item{% endblock %}
+
+{% block content%}
+<div class="modal-body">
+    <div class="container">
+      <form>
+        <div class="form-group">
+          <label for="dealer" class="col-form-label">Dealer:</label>
+          <input type="text" name="dealer" class="form-control" required>
+        </div>
+        <div class="form-row">
+             <div class="col">
+              <label for="make" class="col-form-label">Make:</label>
+              <input type="text" name="make" class="form-control" required>
+            </div>
+            <div class="col">
+              <label for="model" class="col-form-label">Model:</label>
+              <input type="text" name="model" class="form-control" required>
+            </div>
+        </div>
+        <div class="form-group">
+          <label for="model" class="col-form-label">Model:</label>
+          <input type="text" name="name" class="form-control" required>
+        </div>
+        <div class="form-group">
+          <label for="year" class="col-form-label">Year:</label>
+          <input type="text" name="year" class="form-control" required>
+        </div>
+        <div class="form-group">
+          <label for="odo" class="col-form-label">ODO:</label>
+          <input type="text" name="odo" class="form-control" required>
+        </div>
+        <div class="form-group">
+          <label for="price" class="col-form-label">Price:</label>
+          <input type="text" name="price" class="form-control" required>
+        </div>
+        <div class="form-group">
+          <label class="col-form-label" for="type">Type:</label>
+          <select name="type" class="form-control">
+            <option selected="true" disabled="disabled"> Type</option>
+            {% for key,value in type_choices.items %}
+              <option value="{{key}}">{{value}}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="col-form-label" for="engine_type">Engine:</label>
+          <select name="type" class="form-control">
+            <option selected="true" disabled="disabled"> Engine</option>
+            {% for key,value in engine_choices.items %}
+              <option value="{{key}}">{{value}}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <hr>
+        <input type="submit" value="Send" class="btn btn-block btn-secondary">
+      </form>
+    </div>
+</div>
+{% endblock %}
