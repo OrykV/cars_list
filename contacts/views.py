@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import redirect
 from django.contrib import messages
 from .models import Contact
 
@@ -13,7 +13,6 @@ def contact(request):
         message = request.POST['message']
         user_id = request.POST['user_id']
 
-
         #  Check if user has made inquiry already
         if request.user.is_authenticated:
             user_id = request.user.id
@@ -22,6 +21,7 @@ def contact(request):
                 messages.error(request, 'You have already made an inquiry for this listing')
                 return redirect('/listings/' + listing_id)
 
+        #  Create new inquiry
         contact = Contact(listing=listing, listing_id=listing_id, name=name, email=email, phone=phone, message=message,
                           user_id=user_id)
 

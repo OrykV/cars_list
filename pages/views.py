@@ -1,12 +1,11 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from listings.choices import type_choices, engine_choices, color_choices, price_choices
 
+from listings.choices import type_choices, engine_choices, color_choices, price_choices
 from listings.models import Listing
 from dealers.models import Dealer
 
 
-# Create your views here.
 def index(request):
     listings = Listing.objects.order_by('-list_date').filter(is_published=True)[:3]
 

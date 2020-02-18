@@ -1,6 +1,7 @@
-from django.shortcuts import render, get_object_or_404
-from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
+from django.shortcuts import render, get_object_or_404, redirect
+from django.core.paginator import Paginator
 from .choices import type_choices, engine_choices, color_choices, price_choices
+
 
 from .models import Listing
 from dealers.models import Dealer
@@ -10,6 +11,7 @@ from dealers.models import Dealer
 def index(request):
     listings = Listing.objects.order_by('-list_date').filter(is_published=True)
 
+    # Create paginator
     paginator = Paginator(listings, 6)
     page = request.GET.get('page')
     paged_listings = paginator.get_page(page)
@@ -76,9 +78,51 @@ def search(request):
 
 
 def add_new(request):
-    queryset_list = Dealer.objects
-    print(queryset_list)
+    # Add new listing from form
+    if request.method == 'POST':
+        req_dealer = request.POST['dealer']
+        make = request.POST['make']
+        model = request.POST['model']
+        year = request.POST['year']
+        odo = request.POST['odo']
+        price = request.POST['price']
+        type = request.POST['type']
+        color = request.POST['color']
+        engine = request.POST['engine']
+        main_photo = request.POST['main_photo']
+        description = request.POST['description']
+        photo_1 = request.POST['photo_1']
+        photo_2 = request.POST['photo_2']
+        photo_3 = request.POST['photo_3']
+        photo_4 = request.POST['photo_4']
+        dealer = Dealer.objects.get(name=req_dealer)
+        if photo_1:
+            listing = Listing(dealer=dealer, make=make, model=model, year=year, odo=odo, price=price,
+                              type=type, color=color, engine_type=engine, main_photo=main_photo,
+                              description=description, photo_1=photo_1)
+        elif photo_2:
+            listing = Listing(dealer=dealer, make=make, model=model, year=year, odo=odo, price=price,
+                              type=type, color=color, engine_type=engine, main_photo=main_photo,
+                              description=description, photo_1=photo_1, photo_2=photo_2)
+        elif photo_3:
+            listing = Listing(dealer=dealer, make=make, model=model, year=year, odo=odo, price=price,
+                              type=type, color=color, engine_type=engine, main_photo=main_photo,
+                              description=description, photo_1=photo_1, photo_2=photo_2, photo_3=photo_3)
+        elif photo_4:
+            listing = Listing(dealer=dealer, make=make, model=model, year=year, odo=odo, price=price,
+                              type=type, color=color, engine_type=engine, main_photo=main_photo,
+                              description=description, photo_1=photo_1, photo_2=photo_2, photo_3=photo_3,
+                              photo_4=photo_4)
+        else:
+            listing = Listing(dealer=dealer, make=make, model=model, year=year, odo=odo, price=price,
+                              type=type, color=color, engine_type=engine, main_photo=main_photo,
+                              description=description)
+        listing.save()
+        return redirect('/listings/')
+
+    queryset_list = Dealer.objects.order_by('-start_date')
     context = {
+        'dealers': queryset_list,
         'type_choices': type_choices,
         'engine_choices': engine_choices
     }

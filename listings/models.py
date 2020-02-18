@@ -3,7 +3,6 @@ from datetime import datetime
 from dealers.models import Dealer
 
 
-# Create your models here.
 class Listing(models.Model):
     dealer = models.ForeignKey(Dealer, on_delete=models.DO_NOTHING)
     make = models.CharField(max_length=100)

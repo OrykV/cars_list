@@ -5,10 +5,16 @@
 {% block content%}
 <div class="modal-body">
     <div class="container">
-      <form>
+      <form method="POST" action="{% url 'add_new' %}">
+      {% csrf_token %}
         <div class="form-group">
           <label for="dealer" class="col-form-label">Dealer:</label>
-          <input type="text" name="dealer" class="form-control" required>
+          <select name="dealer" class="form-control">
+            <option selected="true" disabled="disabled"> Dealer</option>
+            {% for dealer in dealers%}
+              <option value="{{dealer}}">{{dealer}}</option>
+            {% endfor %}
+          </select>
         </div>
         <div class="form-row">
              <div class="col">
@@ -20,39 +26,69 @@
               <input type="text" name="model" class="form-control" required>
             </div>
         </div>
-        <div class="form-group">
-          <label for="model" class="col-form-label">Model:</label>
-          <input type="text" name="name" class="form-control" required>
+        <div class="form-row">
+            <div class="col">
+              <label for="year" class="col-form-label">Year:</label>
+              <input type="text" name="year" class="form-control" required>
+            </div>
+            <div class="col">
+              <label for="odo" class="col-form-label">ODO:</label>
+              <input type="text" name="odo" class="form-control" required>
+            </div>
+            <div class="col">
+              <label for="price" class="col-form-label">Price:</label>
+              <input type="text" name="price" class="form-control" required>
+            </div>
+        </div>
+        <div class="form-row">
+          <div class="col">
+            <label class="col-form-label" for="type">Type:</label>
+            <select name="type" class="form-control" required>
+              <option selected="true" disabled="disabled"> Type</option>
+              {% for key,value in type_choices.items %}
+                <option value="{{key}}">{{value}}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="col">
+            <label class="col-form-label" for="engine_type">Engine:</label>
+            <select name="engine" class="form-control" required>
+              <option selected="true" disabled="disabled"> Engine</option>
+              {% for key,value in engine_choices.items %}
+                <option value="{{key}}">{{value}}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="col">
+            <label for="color" class="col-form-label">Color:</label>
+            <input type="text" name="color" class="form-control" required>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="col">
+            <label for="main_photo" class="col-form-label">Main photo</label>
+            <input type="file" name="main_photo" class="form-control-file" required>
+          </div>
+          <div class="col">
+            <label for="photo_1" class="col-form-label">Photo 1</label>
+            <input type="file" name="photo_1" class="form-control-file">
+          </div>
+          <div class="col">
+            <label for="photo_2" class="col-form-label">Photo 2</label>
+            <input type="file" name="photo_2" class="form-control-file">
+          </div>
+          <div class="col">
+            <label for="photo_3" class="col-form-label">Photo 3</label>
+            <input type="file" name="photo_3" class="form-control-file">
+          </div>
+          <div class="col">
+            <label for="photo_4" class="col-form-label">Photo 4</label>
+            <input type="file" name="photo_4" class="form-control-file">
+          </div>
         </div>
         <div class="form-group">
-          <label for="year" class="col-form-label">Year:</label>
-          <input type="text" name="year" class="form-control" required>
-        </div>
-        <div class="form-group">
-          <label for="odo" class="col-form-label">ODO:</label>
-          <input type="text" name="odo" class="form-control" required>
-        </div>
-        <div class="form-group">
-          <label for="price" class="col-form-label">Price:</label>
-          <input type="text" name="price" class="form-control" required>
-        </div>
-        <div class="form-group">
-          <label class="col-form-label" for="type">Type:</label>
-          <select name="type" class="form-control">
-            <option selected="true" disabled="disabled"> Type</option>
-            {% for key,value in type_choices.items %}
-              <option value="{{key}}">{{value}}</option>
-            {% endfor %}
-          </select>
-        </div>
-        <div class="form-group">
-          <label class="col-form-label" for="engine_type">Engine:</label>
-          <select name="type" class="form-control">
-            <option selected="true" disabled="disabled"> Engine</option>
-            {% for key,value in engine_choices.items %}
-              <option value="{{key}}">{{value}}</option>
-            {% endfor %}
-          </select>
+          <label for="description">Description:</label>
+          <textarea name="description" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
         </div>
         <hr>
         <input type="submit" value="Send" class="btn btn-block btn-secondary">
@@ -60,3 +96,5 @@
     </div>
 </div>
 {% endblock %}
+
+/* id="inputGroupFile01" aria-describedby="inputGroupFileAddon01"*/
